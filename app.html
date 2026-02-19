@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sugar Bot — App</title>
+  <meta name="color-scheme" content="light" />
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --accent:#ff6b00;
+      --shadow: 0 18px 50px rgba(17,24,39,.10);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background: var(--bg);
+      min-height:100vh;
+    }
+    header{
+      position:sticky; top:0;
+      background: rgba(246,247,251,.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:-.01em;
+    }
+    .pill{
+      font-size:12px;
+      color:#7a3300;
+      border:1px solid rgba(255,107,0,.35);
+      background: rgba(255,107,0,.10);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+    }
+    .right{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .btn{
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn:hover{ filter: brightness(.99); }
+    .btn.primary{
+      border:1px solid var(--accent);
+      background: var(--accent);
+      color:#fff;
+    }
+    main{
+      padding:18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card{
+      border:1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .top{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .muted{ color:var(--muted); font-size:13px; }
+    .chatwrap{
+      height: calc(100vh - 170px);
+      min-height: 520px;
+      background:#fff;
+    }
+    .placeholder{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--muted);
+      text-align:center;
+    }
+    .code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background:#f3f4f6;
+      border:1px dashed var(--border);
+      padding:10px 12px;
+      border-radius:12px;
+      margin-top:10px;
+      color:#374151;
+      text-align:left;
+      max-width: 760px;
+      overflow:auto;
+    }
+
+main{
+  height: calc(100vh - 70px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  width:100%;
+  max-width:1200px;
+}
+
+.chatwrap{
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.chatwrap iframe{
+  flex:1;
+  width:100%;
+  border:none;
+}
+
+  </style>
+</head>
+
+<body style="display:none">
+  <header>
+    <div class="brand">
+      <span class="pill">Sugar Bot</span>
+    </div>
+    <div class="right">
+      <span id="userEmail"></span>
+      <button id="btnLogout" class="btn">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="top">
+        <div>
+          <div style="font-weight:800;">Chat</div>
+          <div class="muted">You are signed in. If you log out, you’ll be redirected to the login page.</div>
+        </div>
+        <a class="btn primary" href="index.html" style="text-decoration:none;">Back to login</a>
+      </div>
+
+      <div class="chatwrap" id="chatwrap">
+        <!-- ✅ INCOLLA QUI L'EMBED DEL TUO CHATBOT (iframe o script) -->
+       <iframe 
+  src="https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help"
+  style="width:100%; height:100%; border:none; border-radius:18px;">
+</iframe>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgdHtIIJylIzDNRbIHQ8Z-nPgQ8rzJy4A",
+      authDomain: "landin-page-protetta-chatbot.firebaseapp.com",
+      projectId: "landin-page-protetta-chatbot",
+      storageBucket: "landin-page-protetta-chatbot.firebasestorage.app",
+      messagingSenderId: "312434199816",
+      appId: "1:312434199816:web:12a2eeda307a6ebf4f70bd",
+      measurementId: "G-GM4V2WJYWT"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const userEmail = document.getElementById("userEmail");
+    const btnLogout = document.getElementById("btnLogout");
+
+  onAuthStateChanged(auth, (user) => {
+  if (!user){
+    window.location.href = "index.html";
+    return;
+  }
+
+  document.body.style.display = "block"; // mostra pagina solo se loggato
+  userEmail.textContent = user.email || "";
+});
+
+
+    btnLogout.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBgdHtIIJylIzDNRbIHQ8Z-nPgQ8rzJy4A",
+  authDomain: "landin-page-protetta-chatbot.firebaseapp.com",
+  projectId: "landin-page-protetta-chatbot",
+  storageBucket: "landin-page-protetta-chatbot.firebasestorage.app",
+  messagingSenderId: "312434199816",
+  appId: "1:312434199816:web:12a2eeda307a6ebf4f70bd"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, user => {
+  if(!user){
+    window.location.href = "index.html";
+  }
+});
+</script>
+
+</body>
+</html>

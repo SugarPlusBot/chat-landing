@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sugar Bot User Area</title>
+  <meta name="color-scheme" content="light" />
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --accent:#ff6b00;
+      --accent-soft: rgba(255,107,0,.12);
+      --shadow: 0 18px 50px rgba(17,24,39,.10);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 12% 10%, var(--accent-soft), transparent 55%),
+        radial-gradient(900px 520px at 90% 0%, rgba(17,24,39,.05), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+    }
+    .wrap{
+      width:100%;
+      max-width:980px;
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1.15fr 1fr;
+    }
+    @media (max-width: 920px){ .wrap{grid-template-columns:1fr;} }
+
+    .hero{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.6);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding:28px;
+      box-shadow: var(--shadow);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border:1px solid rgba(255,107,0,.25);
+      background: rgba(255,107,0,.08);
+      border-radius:999px;
+      font-size:13px;
+      color:#7a3300;
+    }
+    .dot{
+      width:9px;height:9px;border-radius:50%;
+      background:var(--accent);
+      box-shadow: 0 0 0 6px rgba(255,107,0,.14);
+    }
+    h1{margin:14px 0 10px; font-size:34px; letter-spacing:-.02em;}
+    .sub{margin:0; color:var(--muted); line-height:1.55; max-width:55ch;}
+
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius: var(--radius);
+      padding:22px;
+      box-shadow: var(--shadow);
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      padding:6px;
+      background:#f3f4f6;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      margin-bottom:16px;
+    }
+    .tab{
+      flex:1;
+      border:none;
+      background:transparent;
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+      color:var(--muted);
+    }
+    .tab.active{
+      background:#fff;
+      color:var(--text);
+      box-shadow: 0 6px 18px rgba(17,24,39,.08);
+      border:1px solid var(--border);
+    }
+
+    label{display:block; font-size:13px; color:var(--muted); margin:12px 0 6px;}
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background:#fff;
+      outline:none;
+      font-size:15px;
+    }
+    input:focus{
+      border-color: rgba(255,107,0,.45);
+      box-shadow: 0 0 0 4px rgba(255,107,0,.12);
+    }
+    .row{display:grid; gap:10px; grid-template-columns: 1fr 1fr;}
+    @media (max-width: 520px){ .row{grid-template-columns:1fr;} }
+
+    .btn{
+      width:100%;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius: 12px;
+      border:1px solid rgba(255,107,0,.35);
+      background: rgba(255,107,0,.10);
+      color:#7a3300;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:hover{ background: rgba(255,107,0,.14); }
+    .btn.primary{
+      border:1px solid var(--accent);
+      background: var(--accent);
+      color:white;
+    }
+    .btn.primary:hover{ filter: brightness(.98); }
+
+    .hint{margin-top:10px; color:var(--muted); font-size:13px; line-height:1.45;}
+    .msg{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fafafa;
+      color:var(--muted);
+      font-size:14px;
+      display:none;
+    }
+    .msg.show{display:block;}
+    .msg.ok{border-color: rgba(16,185,129,.35); background: rgba(16,185,129,.08); color:#065f46;}
+    .msg.err{border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.08); color:#7f1d1d;}
+    .footer{
+      margin-top:16px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .link{
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(17,24,39,.35);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge"><span class="dot"></span> Secure access</div>
+      <h1>Sugar Bot User Area</h1>
+      <p class="sub">
+        Sign in with your company email and password.
+        First time here? Create your profile in a few seconds.
+      </p>
+
+      <p class="hint">
+          Access reserved to company accounts only.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="tabs">
+        <button id="tabSignIn" class="tab active" type="button">Sign in</button>
+        <button id="tabSignUp" class="tab" type="button">Create account</button>
+      </div>
+
+      <!-- SIGN IN -->
+      <form id="formSignIn" autocomplete="on" novalidate>
+        <label for="inEmail">Email</label>
+        <input id="inEmail" type="email" placeholder="name@company.com" required />
+
+        <label for="inPass">Password</label>
+        <input id="inPass" type="password" placeholder="Your password" required />
+
+        <button class="btn primary" type="submit">Sign in</button>
+
+        <button id="btnReset" class="btn" type="button">Forgot password</button>
+
+        <div id="msgIn" class="msg"></div>
+      </form>
+
+      <!-- SIGN UP -->
+      <form id="formSignUp" style="display:none" autocomplete="on" novalidate>
+        <div class="row">
+          <div>
+            <label for="upEmail">Company email</label>
+            <input id="upEmail" type="email" placeholder="name@company.com" required />
+          </div>
+          <div>
+            <label for="upPass">Password</label>
+            <input id="upPass" type="password" placeholder="Create a password" required minlength="6" />
+          </div>
+        </div>
+
+        <label for="upPass2">Repeat password</label>
+        <input id="upPass2" type="password" placeholder="Repeat password" required minlength="6" />
+
+        <button class="btn primary" type="submit">Create account</button>
+
+        <div class="hint">
+           Password must contain at least 6 characters.
+        </div>
+
+        <div id="msgUp" class="msg"></div>
+      </form>
+
+      <div class="footer">
+        <span>Minimal • Secure • Brand accent</span>
+      
+      </div>
+    </section>
+  </div>
+
+  <!-- Firebase (Modular SDK) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail,
+      setPersistence,
+      browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // ✅ Your Firebase config (provided by you)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgdHtIIJylIzDNRbIHQ8Z-nPgQ8rzJy4A",
+      authDomain: "landin-page-protetta-chatbot.firebaseapp.com",
+      projectId: "landin-page-protetta-chatbot",
+      storageBucket: "landin-page-protetta-chatbot.firebasestorage.app",
+      messagingSenderId: "312434199816",
+      appId: "1:312434199816:web:12a2eeda307a6ebf4f70bd",
+      measurementId: "G-GM4V2WJYWT"
+    };
+
+    // OPTIONAL: restrict allowed email domains (leave empty [] to allow any email)
+    // Example: const allowedDomains = ["azienda.it", "sugarplus.it"];
+    const allowedDomains = ["edfman.com"];
+
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Keep user logged in
+    await setPersistence(auth, browserLocalPersistence);
+
+    // UI elements
+    const tabSignIn = document.getElementById("tabSignIn");
+    const tabSignUp = document.getElementById("tabSignUp");
+    const formSignIn = document.getElementById("formSignIn");
+    const formSignUp = document.getElementById("formSignUp");
+    const msgIn = document.getElementById("msgIn");
+    const msgUp = document.getElementById("msgUp");
+    const openApp = document.getElementById("openApp");
+
+    const inEmail = document.getElementById("inEmail");
+    const inPass  = document.getElementById("inPass");
+    const upEmail = document.getElementById("upEmail");
+    const upPass  = document.getElementById("upPass");
+    const upPass2 = document.getElementById("upPass2");
+    const btnReset = document.getElementById("btnReset");
+
+    function showMsg(el, text, kind=""){
+      el.className = "msg show" + (kind ? " " + kind : "");
+      el.textContent = text;
+    }
+    function clearMsg(el){
+      el.className = "msg";
+      el.textContent = "";
+    }
+
+    function isAllowedEmail(email){
+      if (!allowedDomains.length) return true;
+      const at = email.lastIndexOf("@");
+      if (at === -1) return false;
+      const domain = email.slice(at + 1).toLowerCase();
+      return allowedDomains.map(d => d.toLowerCase()).includes(domain);
+    }
+
+    function switchTab(which){
+      clearMsg(msgIn); clearMsg(msgUp);
+      if (which === "in"){
+        tabSignIn.classList.add("active");
+        tabSignUp.classList.remove("active");
+        formSignIn.style.display = "";
+        formSignUp.style.display = "none";
+      } else {
+        tabSignUp.classList.add("active");
+        tabSignIn.classList.remove("active");
+        formSignUp.style.display = "";
+        formSignIn.style.display = "none";
+      }
+    }
+
+    tabSignIn.addEventListener("click", () => switchTab("in"));
+    tabSignUp.addEventListener("click", () => switchTab("up"));
+
+    formSignIn.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg(msgIn);
+
+      const email = inEmail.value.trim();
+      const pass  = inPass.value;
+
+try {
+  await signInWithEmailAndPassword(auth, email, pass);
+  showMsg(msgIn, "Signed in. Redirecting…", "ok");
+  window.location.href = "app.html";
+} catch (err) {
+  const code = err?.code || "";
+
+  // Messaggio "classico"
+  let message = "Invalid email or password.";
+
+  // Varianti utili
+  if (code === "auth/invalid-email") message = "Invalid email format.";
+  if (code === "auth/too-many-requests") message = "Too many attempts. Please try again later.";
+
+  showMsg(msgIn, message, "err");
+}
+
+    });
+
+    formSignUp.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg(msgUp);
+
+      const email = upEmail.value.trim();
+      const pass  = upPass.value;
+      const pass2 = upPass2.value;
+
+      if (!isAllowedEmail(email)){
+        showMsg(msgUp, "This email domain is not allowed for registration.", "err");
+        return;
+      }
+      if (pass !== pass2){
+        showMsg(msgUp, "Passwords do not match.", "err");
+        return;
+      }
+
+      try{
+        await createUserWithEmailAndPassword(auth, email, pass);
+        showMsg(msgUp, "Account created. Redirecting…", "ok");
+        window.location.href = "app.html";
+      }catch(err){
+        showMsg(msgUp, err.message, "err");
+      }
+    });
+
+    btnReset.addEventListener("click", async () => {
+      clearMsg(msgIn);
+      const email = (inEmail.value || "").trim();
+      if (!email){
+        showMsg(msgIn, "Enter your email first, then click 'Forgot password'.", "err");
+        return;
+      }
+      try{
+        await sendPasswordResetEmail(auth, email);
+        showMsg(msgIn, "Password reset email sent.", "ok");
+      }catch(err){
+        showMsg(msgIn, err.message, "err");
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user){
+        openApp.style.display = "inline";
+        openApp.onclick = (e) => { e.preventDefault(); window.location.href = "app.html"; };
+      } else {
+        openApp.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
