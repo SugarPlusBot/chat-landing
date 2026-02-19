@@ -173,10 +173,62 @@ main{
 
       <div class="chatwrap" id="chatwrap">
         <!-- ✅ INCOLLA QUI L'EMBED DEL TUO CHATBOT (iframe o script) -->
-       <iframe 
-  src="https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help"
-  style="width:100%; height:100%; border:none; border-radius:18px;">
-</iframe>
+     <div id="chat-container" style="position:relative; height:80vh; border-radius:18px; overflow:hidden;">
+
+  <iframe
+    id="chatframe"
+    src="https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help"
+    style="width:100%; height:100%; border:none;">
+  </iframe>
+
+  <div id="fallback"
+       style="
+       position:absolute;
+       inset:0;
+       display:none;
+       align-items:center;
+       justify-content:center;
+       background:white;
+       font-family:system-ui;
+       flex-direction:column;
+       gap:20px;
+       ">
+
+      <p>La chat non può essere caricata automaticamente su questa rete.</p>
+
+      <button onclick="window.open('https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help','_blank')"
+              style="
+                background:#ff6b00;
+                color:white;
+                padding:16px 28px;
+                font-size:18px;
+                border:none;
+                border-radius:14px;
+                cursor:pointer;">
+        Apri la chat
+      </button>
+
+  </div>
+
+</div>
+
+<script>
+  const frame = document.getElementById("chatframe");
+  const fallback = document.getElementById("fallback");
+
+  let loaded = false;
+
+  frame.onload = () => {
+    loaded = true;
+  };
+
+  setTimeout(() => {
+    if (!loaded) {
+      fallback.style.display = "flex";
+    }
+  }, 3000);
+</script>
+
       </div>
     </div>
   </main>
@@ -243,3 +295,4 @@ onAuthStateChanged(auth, user => {
 
 </body>
 </html>
+
