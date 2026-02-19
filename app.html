@@ -166,66 +166,49 @@ main{
       <div class="top">
         <div>
           <div style="font-weight:800;">Chat</div>
-          <div class="muted">You are signed in. If you log out, you’ll be redirected to the login pagee.</div>
+          <div class="muted">You are signed in. If you log out, you’ll be redirected to the login page.</div>
         </div>
         <a class="btn primary" href="index.html" style="text-decoration:none;">Back to login</a>
       </div>
 
       <div class="chatwrap" id="chatwrap">
         <!-- ✅ INCOLLA QUI L'EMBED DEL TUO CHATBOT (iframe o script) -->
-     <div id="chat-container" style="position:relative; height:80vh; border-radius:18px; overflow:hidden;">
-
-    <iframe
+<div id="chatWrap" style="position:relative; height:80vh; border-radius:18px; overflow:hidden;">
+  <iframe
     id="chatframe"
     src="https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help"
     style="width:100%; height:100%; border:none;">
   </iframe>
 
-  <!-- Chip discreto: appare solo se l’utente non riesce a usare la chat -->
-  <a
-    id="helpChip"
-    href="https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help"
-    target="_blank"
-    rel="noopener noreferrer"
-    style="
-      position:absolute;
-      right:14px;
-      bottom:14px;
-      display:none;
-      padding:10px 12px;
-      border-radius:999px;
-      font-family:system-ui;
-      font-size:13px;
-      text-decoration:none;
-      background:#111;
-      color:#fff;
-      box-shadow:0 6px 18px rgba(0,0,0,.18);
-      z-index:10;
-    "
-  >
-    Non vedi la chat? Apri qui
-  </a>
-
+  <div id="helpChip" style="
+      position:absolute; right:14px; bottom:14px; display:none; z-index:10; font-family:system-ui;">
+    <button id="openChatbase" style="
+        background:#111; color:#fff; border:none; border-radius:999px;
+        padding:10px 12px; font-size:13px; cursor:pointer;
+        box-shadow:0 6px 18px rgba(0,0,0,.18);">
+      Se la chat è vuota, clicca qui
+    </button>
+  </div>
 </div>
 
 <script>
-  (function () {
-    const wrap = document.getElementById("chatWrap");
-    const chip = document.getElementById("helpChip");
+(function () {
+  const wrap = document.getElementById("chatWrap");
+  const chip = document.getElementById("helpChip");
+  const btn = document.getElementById("openChatbase");
 
-    let userInteracted = false;
-
-    // Se l’utente prova a cliccare/toccare l’area chat, assumiamo che la chat si veda → niente chip
-    wrap.addEventListener("pointerdown", () => {
-      userInteracted = true;
-      chip.style.display = "none";
-    });
-
-    // Se dopo 10s non c’è stata interazione, mostriamo il chip (tipico caso: iframe bianco / bloccato)
+  // Mostra il chip solo se l’utente prova davvero a cliccare nella chat
+  wrap.addEventListener("pointerdown", () => {
+    // dopo 1s mostriamo il chip (l’utente può ignorarlo se la chat funziona)
     setTimeout(() => {
-      if (!userInteracted) chip.style.display = "inline-flex";
-    }, 5000);
-  })();
+      chip.style.display = "block";
+    }, 1000);
+  }, { once: true });
+
+  btn.addEventListener("click", () => {
+    window.open("https://www.chatbase.co/uW0y_jU2KaIReNzL_W9we/help", "_blank", "noopener,noreferrer");
+  });
+})();
 </script>
 
       </div>
@@ -294,6 +277,7 @@ onAuthStateChanged(auth, user => {
 
 </body>
 </html>
+
 
 
 
