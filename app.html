@@ -224,7 +224,7 @@ main{
     // Se dopo 10s non c’è stata interazione, mostriamo il chip (tipico caso: iframe bianco / bloccato)
     setTimeout(() => {
       if (!userInteracted) chip.style.display = "inline-flex";
-    }, 10000);
+    }, 5000);
   })();
 </script>
 
@@ -294,5 +294,6 @@ onAuthStateChanged(auth, user => {
 
 </body>
 </html>
+
 
 
